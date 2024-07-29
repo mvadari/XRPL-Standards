@@ -1,6 +1,6 @@
 <pre>
 Title:       <b>Granular Permissions</b>
-Revision:    <b>1</b> (2024-04-22)
+Revision:    <b>1</b> (2024-07-29)
 
 Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
 

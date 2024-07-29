@@ -31,7 +31,7 @@ The XRPL supports many types of integers, all of which are unsigned. The differe
 
 An integer type name includes information about what type of integer it is (signed vs. unsigned) and how many bits it uses. So a `UInt8` is an unsigned integer that uses 8 bits (the `U` stands for "unsigned"), and an `Int16` is a signed integer that uses 16 bits (if the `U` is omitted, it's a signed integer).
 
-The integer types that the XRPL supports:
+The integer types that the XRPL supports are as follows:
 
 | Name | Range  | Example Field |
 |------|--------|---------------|
@@ -49,7 +49,7 @@ The integer types that the XRPL supports:
 
 ## 2. Permissions
 
-A permission is represented by a `UInt32`. A transaction type is represented by a `UInt16`.
+A permission is represented by a `UInt32`.
 
 ### 2.1. Global Permission
 
@@ -58,6 +58,8 @@ The global permission value is already used in existing signer lists; they have 
 **`0`: all permissions**
 
 ### 2.2. Transaction Type Permissions
+
+A transaction type is represented by a `UInt16`.
 
 Transaction type permissions were previously defined in [XLS-49d](https://github.com/XRPLF/XRPL-Standards/discussions/144), section `2.1.1`.
 
@@ -89,7 +91,7 @@ Some other potential examples include:
 * `SponsorFee` - the ability to sponsor the fee of another account (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 * `SponsorReserve` - the ability to sponsor the fee of another account/object (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 
-**NOTE:** these permissions need to be something that can be hard-coded. No custom configurations are allowed. This means that you can't add a permission for payments with a specific currency, for example - the best you could do is XRP vs. issued currency.
+**NOTE:** these permissions need to be something that can be hard-coded. No custom configurations are allowed. This means that you can't add a permission for payments with a specific currency, for example - the best you could theoretically do is XRP vs. issued currency.
 
 ## 3. Security
 
@@ -106,9 +108,9 @@ Anyone who has the power to sign transactions on your behalf can drain your acco
 
 ## Appendix A: FAQ
 
-### A.1: Can we add additional permissions for different groups of transactions, like all NFT transactions or all AMM transactions?
+### A.1: Could we add additional permissions for different groups of transactions, like all NFT transactions or all AMM transactions?
 
-Yes. However, that can also easily be handled with a group of transaction-level permissions. If you think there is a need for this that isn't already addressed by having a group of permissions, please explain in a comment below.
+Theoretically, yes. However, that can also easily be handled with a group of transaction-level permissions. If you think there is a need for this that isn't already addressed by having a group of permissions, please explain in a comment below.
 
 <!--
 ## Appendix B: Alternate Designs

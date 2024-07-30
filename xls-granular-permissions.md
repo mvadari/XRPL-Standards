@@ -42,7 +42,7 @@ The integer types that the XRPL supports are as follows:
 |`UInt96`|$0-2^{96}$|None right now|
 |`UInt128`|$0-2^{128}$|`sfEmailHash`|
 |`UInt160`|$0-2^{160}$|`sfTakerPaysCurrency`|
-|`UInt192`|$0-2^{192}$|None right now|
+|`UInt192`|$0-2^{192}$|`sfMPTokenIssuanceID`|
 |`UInt256`|$0-2^{256}$|`sfNFTokenID`|
 |`UInt384`|$0-2^{384}$|None right now|
 |`UInt512`|$0-2^{512}$|None right now|
@@ -95,14 +95,11 @@ Some other potential examples include:
 
 ## 3. Security
 
-* Don't give permission to someone for things like payments without thinking about it really hard - they could drain your account
-* Anyone with permission over the transaction(s) that give permissions (such as `SignerListSet` in the case of XLS-49d) can give themselves permissions to whatever transactions they want
+Giving permissions to other parties requires a high degree of trust, especially when the delegated account can potentially access funds (the `Payment` permission) or charge reserves (any transaction that can create objects). In addition, any account that has permissions for the entire `AccountSet` or `SignerListSet` transactions can give themselves any permissions even if this was not originally part of the intention.
 
-Anyone who has the power to sign transactions on your behalf can drain your account's XRP via fees. This was why multiple signer lists were never implemented originally. There is [an open issue](https://github.com/XRPLF/rippled/issues/4476) proposing potential ways to prevent accidental high fees on transactions.
+Granular permissions do make this easier, though, since users can provide permissions to only fractions of a transaction, which is especially useful for `AccountSet`.
 
-
-## n+1. Open Questions
-
+With granular permissions, however, users can give permissions to other accounts for only parts of transactions without giving them full control. This is especially helpful for managing complex transaction types like `AccountSet`.
 
 # Appendix
 
@@ -112,5 +109,3 @@ Anyone who has the power to sign transactions on your behalf can drain your acco
 
 Theoretically, yes. However, that can also easily be handled with a group of transaction-level permissions. If you think there is a need for this that isn't already addressed by having a group of permissions, please explain in a comment below.
 
-<!--
-## Appendix B: Alternate Designs

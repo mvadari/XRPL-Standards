@@ -25,11 +25,7 @@ We also propose modifying the transaction common fields.
 
 This feature will require an amendment, tentatively titled `featureTransactionAuth`.
 
-### 1.1. Terminology
-
-* **Permissions** - all the permissions you can have, could be a transaction type or something more granular. The different types of permissions that are supported are explained in [XLS-otherd, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316).
-
-### 1.2. Basic Flow
+### 1.1. Basic Flow
 
 Isaac, a token issuer, wants to set up his account to follow security best practices and separation of responsibilities. He wants Alice to manage token issuing and Bob to manage trustlines. He is also working with Kylie, a KYC provider, who he wants to be able to authorize trustlines but not have any other permissions (as she is an external party).
 
@@ -60,9 +56,7 @@ The ID of this object will be a hash of the `Account` and `Authorize` fields, co
 
 #### 2.1.2. `Permissions`
 
-Could be a transaction type value, or a more specific value. See other XLS spec about granular permissions.
-
-The array will have a maximum length of 10.
+This field is an array of permissions to delegate to the account, as listed in [XLS-otherd, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316). The array will have a maximum length of 10.
 
 ## 3. Transaction: `TransactionAuth`
 

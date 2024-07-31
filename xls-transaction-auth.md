@@ -197,9 +197,19 @@ On the other hand, this mechanism also offers a granular approach to authorizati
 
 ## Appendix A: Comparing with [XLS-49d](https://github.com/XRPLF/XRPL-Standards/discussions/144), Multiple Signer Lists
 
-No multisig support, just a singular account has this permission (though that single account could have its own signer list). Both are useful for slightly different usecases; XLS-49d is useful when you want multiple signatures to guard certain features, while this proposal is useful when you want certain parties to have access to certain features.
+In XLS-49d:
+* There is multisign support by default.
+* The signer list is controlled by the main account.
+* There may be at most one list per permission, with a maximum of 32 signers.
+* There is a total of one reserve per signer list.
 
-The main difference is that with XLS-49d, the account controls the  signer list. With this proposal, the signer list is essentially self-governing, and it would take more reserves to set up such a signer list.
+In this proposal:
+* There is no direct multisign support (though permissions can be delegated to an account with a multisign setup).
+* The keys that have been delegated to are self-governed (i.e. the main account doesn't control the signer list on an account that has been delegated to).
+* A permission may be delegated to as many accounts/signer lists as one is willing to pay reserve for.
+* There is one reserve per delegated account.
+
+Both are useful for slightly different usecases; XLS-49d is more useful when you want multiple signatures to guard certain features, while this proposal is useful when you want certain parties to have access to certain features. This proposal does support XLS-49d-like usage, but it would cost more XRP, as a second account would need to be created.
 
 <!--
 ## Appendix B: FAQ

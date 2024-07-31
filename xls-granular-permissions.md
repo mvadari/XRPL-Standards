@@ -1,5 +1,5 @@
 <pre>
-Title:       <b>Transaction Permissions</b>
+Title:       <b>Account Transaction Permissions</b>
 Revision:    <b>1</b> (2024-07-31)
 
 Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
@@ -7,7 +7,7 @@ Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
 Affiliation: <a href="https://ripple.com">Ripple</a>
 </pre>
 
-# Transaction Permissions
+# Account Transaction Permissions
 
 ## Abstract
 

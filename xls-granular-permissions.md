@@ -47,6 +47,8 @@ The integer types that the XRPL supports are as follows:
 |`UInt384`|$0-2^{384}$|None right now|
 |`UInt512`|$0-2^{512}$|None right now|
 
+_The `sf` in the above table stands for "Serialized Field"._
+
 ## 2. Permissions
 
 A permission is represented by a `UInt32`.

@@ -11,7 +11,7 @@ Affiliation: <a href="https://ripple.com">Ripple</a>
 
 ## Abstract
 
-This document formalizes different types of transaction-based permissions. Permissions include all transactions, a single transaction, or a subset of a transaction's capabilities.
+This document formalizes different types of transaction-based account permissions. Permissions include all transactions, a single transaction, or a subset of a transaction's capabilities.
 
 ## 1. Overview
 
@@ -88,19 +88,17 @@ We are able to include these permissions because of the gap between the size of 
 
 ### 2.4. Adding Additional Granular Types
 
-Lots of other granular permissions can be added. There is room for a total of 4,294,901,759 granular permissions, given the limits of the size of the `UInt32` vs. the size of the `UInt16` (for transaction types).
+Many other granular permissions may be added. There is capacity for a total of 4,294,901,759 granular permissions, given the limits of the size of the `UInt32` vs. the size of the `UInt16` (for transaction types).
 
 Some other potential examples include:
 * `SponsorFee` - the ability to sponsor the fee of another account (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 * `SponsorReserve` - the ability to sponsor the fee of another account/object (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 
-**NOTE:** these permissions need to be something that can be hard-coded. No custom configurations are allowed. This means that you can't add a permission for payments with a specific currency, for example - the best you could theoretically do is XRP vs. issued currency.
+**NOTE:** The set of permissions must be hard-coded. No custom configurations are allowed. For example, we cannot add permissions based on specific currencies - the best you could theoretically do on that front is XRP vs. issued currency.
 
 ## 3. Security
 
 Giving permissions to other parties requires a high degree of trust, especially when the delegated account can potentially access funds (the `Payment` permission) or charge reserves (any transaction that can create objects). In addition, any account that has permissions for the entire `AccountSet` or `SignerListSet` transactions can give themselves any permissions even if this was not originally part of the intention.
-
-Granular permissions do make this easier, though, since users can provide permissions to only fractions of a transaction, which is especially useful for `AccountSet`.
 
 With granular permissions, however, users can give permissions to other accounts for only parts of transactions without giving them full control. This is especially helpful for managing complex transaction types like `AccountSet`.
 

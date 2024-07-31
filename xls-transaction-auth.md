@@ -27,7 +27,7 @@ This feature will require an amendment, tentatively titled `featureTransactionAu
 
 ### 1.1. Terminology
 
-* **Permissions** - all the permissions you can have, could be a transaction type or something more granular. The different types of permissions that are supported are explained in [XLS-otherd](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316).
+* **Permissions** - all the permissions you can have, could be a transaction type or something more granular. The different types of permissions that are supported are explained in [XLS-otherd, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316).
 
 ### 1.2. Basic Flow
 

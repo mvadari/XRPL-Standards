@@ -140,7 +140,7 @@ In this example, Isaac is delegating the `Payment` permission to Alice, the `Tru
 }
 ```
 
-_Note: the weird format of `Permissions`, with needing an internal object, is due to peculiarities in the [XRPL's Binary Format](https://xrpl.org/docs/references/protocol/binary-format)._
+_Note: the weird format of `Permissions`, with needing an internal object, is due to peculiarities in the [XRPL's Binary Format](https://xrpl.org/docs/references/protocol/binary-format). It can be cleaned up/simplified in tooling._
 
 ### 5.2. `TransactionAuth` Object
 

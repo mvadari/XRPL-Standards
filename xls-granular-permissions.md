@@ -71,7 +71,7 @@ Adding a new transaction type to the XRPL will automatically be supported by any
 
 These permissions would support control over some smaller portion of a transaction, rather than being able to do all of the functionality that the transaction allows.
 
-We are able to include these permissions because of the gap between the size of the `UInt16` and the `UInt32`.
+We are able to include these permissions because of the gap between the size of the `UInt16` and the `UInt32` (the size of the `SignerListID` field).
 
 | Value | Name  | Description |
 |-------|-------|-------------|

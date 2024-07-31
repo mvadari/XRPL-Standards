@@ -31,7 +31,7 @@ This feature will require an amendment, tentatively titled `featureTransactionAu
 
 ### 1.2. Basic Flow
 
-Isaac, a token issuer, wants to set up his account to follow security best practices and separation of responsibilities. He wants Alice to handle token issuing and Bob to handle trustlines. He is also working with Kylie, a KYC provider, who he wants to be able to authorize trustlines but not have any other permissions (as she is an external party).
+Isaac, a token issuer, wants to set up his account to follow security best practices and separation of responsibilities. He wants Alice to manage token issuing and Bob to manage trustlines. He is also working with Kylie, a KYC provider, who he wants to be able to authorize trustlines but not have any other permissions (as she is an external party).
 
 He can authorize:
 * Alice's account for the `Payment` transaction permission.

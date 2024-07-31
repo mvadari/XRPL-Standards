@@ -1,6 +1,6 @@
 <pre>
-Title:       <b>Granular Permissions</b>
-Revision:    <b>1</b> (2024-07-29)
+Title:       <b>Transaction Permissions</b>
+Revision:    <b>1</b> (2024-07-31)
 
 Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
 
@@ -83,8 +83,8 @@ We are able to include these permissions because of the gap between the size of 
 |`65542`| `AccountMessageKeySet`|Modify the `MessageKey` of an account.|
 |`65543`| `AccountTransferRateSet`|Modify the transfer rate of an account.|
 |`65544`| `AccountTickSizeSet`|Modify the tick size of an account.|
-|`65545`| `PaymentMint`|Send a payment for a currency where the account is the issuer.|
-|`65546`| `PaymentBurn`|Send a payment for a currency where the destination is the issuer.|
+|`65545`| `PaymentMint`|Send a payment for a currency where the sending account is the issuer.|
+|`65546`| `PaymentBurn`|Send a payment for a currency where the destination account is the issuer.|
 
 ### 2.4. Adding Additional Granular Types
 

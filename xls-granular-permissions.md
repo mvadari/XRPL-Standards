@@ -77,11 +77,14 @@ We are able to include these permissions because of the gap between the size of 
 |-------|-------|-------------|
 |`65537`| `TrustlineAuthorize`|Authorize a trustline.|
 |`65538`| `TrustlineFreeze`|Freeze a trustline.|
-|`65539`| `AccountDomainSet`|Modify the domain of an account.|
-|`65540`| `AccountEmailHashSet`|Modify the `EmailHash` of an account.|
-|`65541`| `AccountMessageKeySet`|Modify the `MessageKey` of an account.|
-|`65542`| `AccountTransferRateSet`|Modify the transfer rate of an account.|
-|`65543`| `AccountTickSizeSet`|Modify the tick size of an account.|
+|`65539`| `TrustlineFreeze`|Unfreeze a trustline.|
+|`65540`| `AccountDomainSet`|Modify the domain of an account.|
+|`65541`| `AccountEmailHashSet`|Modify the `EmailHash` of an account.|
+|`65542`| `AccountMessageKeySet`|Modify the `MessageKey` of an account.|
+|`65543`| `AccountTransferRateSet`|Modify the transfer rate of an account.|
+|`65544`| `AccountTickSizeSet`|Modify the tick size of an account.|
+|`65545`| `PaymentMint`|Send a payment for a currency where the account is the issuer.|
+|`65546`| `PaymentBurn`|Send a payment for a currency where the destination is the issuer.|
 
 ### 2.4. Adding Additional Granular Types
 

@@ -117,7 +117,7 @@ The transaction succeeds as if the transaction was sent by the `OnBehalfOf` acco
 
 ## 5. Examples
 
-In this example, Isaac is delegating the `Payment` permission to Alice.
+In this example, Isaac is delegating the `Payment` permission to Alice, the `TrustSet` permission to Bob, and the `TrustlineAuthorize` permission to Kylie.
 
 ### 5.1. `TransactionAuth` Transaction
 
@@ -126,9 +126,27 @@ In this example, Isaac is delegating the `Payment` permission to Alice.
     TransactionType: "TransactionAuth",
     Account: "rISAAC......",
     Authorize: "rALICE......",
-    Permissions: [1], // Payment
+    Permissions: [{Permission: {PermissionValue: "Payment"}}],
 }
 ```
+```typescript
+{
+    TransactionType: "TransactionAuth",
+    Account: "rISAAC......",
+    Authorize: "rBOB......",
+    Permissions: [{Permission: {PermissionValue: "TrustSet"}}],
+}
+```
+```typescript
+{
+    TransactionType: "TransactionAuth",
+    Account: "rISAAC......",
+    Authorize: "rKYLIE......",
+    Permissions: [{Permission: {PermissionValue: "TrustlineAuthorize"}}],
+}
+```
+
+_Note: the weird format of `Permissions`, with needing an internal object, is due to peculiarities in the [XRPL's Binary Format](https://xrpl.org/docs/references/protocol/binary-format)._
 
 ### 5.2. `TransactionAuth` Object
 
@@ -137,7 +155,23 @@ In this example, Isaac is delegating the `Payment` permission to Alice.
     LedgerEntryType: "TransactionAuth",
     Account: "rISAAC......",
     Authorize: "rALICE......",
-    Permissions: [1], // Payment
+    Permissions: [{Permission: {PermissionValue: "Payment"}}],
+}
+```
+```typescript
+{
+    LedgerEntryType: "TransactionAuth",
+    Account: "rISAAC......",
+    Authorize: "rBOB......",
+    Permissions: [{Permission: {PermissionValue: "TrustSet"}}],
+}
+```
+```typescript
+{
+    LedgerEntryType: "TransactionAuth",
+    Account: "rISAAC......",
+    Authorize: "rKYLIE......",
+    Permissions: [{Permission: {PermissionValue: "TrustlineAuthorize"}}],
 }
 ```
 
@@ -148,6 +182,8 @@ In this example, Isaac is delegating the `Payment` permission to Alice.
 ## 7. Security
 
 Delegating permissions to other accounts requires a high degree of trust, especially when the delegated account can potentially access funds (`Payment`s) or charge reserves (any transaction that can create objects). In addition, any account that has access to the entire `AccountSet`, `SignerListSet`, or `TransactionAuth` transactions can give themselves any permissions even if this was not originally part of the intention. Authorizing users for those transactions should have heavy warnings associated with it in tooling and UIs.
+
+All tooling indicating whether an account has been blackholed will need to be updated to also check if `AccountSet`, `SignerListSet`, or `TransactionAuth` permissions have been delegated.
 
 On the other hand, this mechanism also offers a granular approach to authorization, allowing accounts to selectively grant specific permissions without compromising overall account control. This approach provides a balance between security and usability, empowering account holders to manage their assets and interactions more effectively.
 

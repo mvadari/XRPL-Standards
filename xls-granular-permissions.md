@@ -77,7 +77,7 @@ We are able to include these permissions because of the gap between the size of 
 |-------|-------|-------------|
 |`65537`| `TrustlineAuthorize`|Authorize a trustline.|
 |`65538`| `TrustlineFreeze`|Freeze a trustline.|
-|`65539`| `TrustlineFreeze`|Unfreeze a trustline.|
+|`65539`| `TrustlineUnfreeze`|Unfreeze a trustline.|
 |`65540`| `AccountDomainSet`|Modify the domain of an account.|
 |`65541`| `AccountEmailHashSet`|Modify the `EmailHash` of an account.|
 |`65542`| `AccountMessageKeySet`|Modify the `MessageKey` of an account.|

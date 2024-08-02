@@ -7,7 +7,7 @@ Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
 Affiliation: <a href="https://ripple.com">Ripple</a>
 </pre>
 
-# Account Transaction Permissions
+# Account Permissions
 
 ## Abstract
 

@@ -87,6 +87,8 @@ We are able to include these permissions because of the gap between the size of 
 |`65544`|`AccountTickSizeSet`|Modify the tick size of an account.|
 |`65545`|`PaymentMint`|Send a payment for a currency where the sending account is the issuer.|
 |`65546`|`PaymentBurn`|Send a payment for a currency where the destination account is the issuer.|
+|`65547`|`MPTokenIssuanceLock`|Use the `MPTIssuanceSet` transaction to lock (freeze) a holder.|
+|`65548`|`MPTokenIssuanceUnlock`|Use the `MPTIssuanceSet` transaction to unlock (unfreeze) a holder.|
 
 ### 2.4. Adding Additional Granular Types
 

@@ -1,6 +1,6 @@
 <pre>
 Title:       <b>Account Permission Delegation</b>
-Revision:    <b>1</b> (2024-07-31)
+Revision:    <b>1</b> (2024-08-20)
 
 Author:      <a href="mailto:mvadari@ripple.com">Mayukha Vadari</a>
 
@@ -18,12 +18,12 @@ Currently, critical issuer actions, such as authorizing trustlines, require dire
 ## 1. Overview
 
 We propose:
-* Creating a `TransactionAuth` ledger object.
-* Creating a `TransactionAuth` transaction type.
+* Creating a `AccountPermission` ledger object.
+* Creating a `AccountPermissionSet` transaction type.
 
 We also propose modifying the transaction common fields.
 
-This feature will require an amendment, tentatively titled `featureTransactionAuth`.
+This feature will require an amendment, tentatively titled `featureAccountPermission`.
 
 ### 1.1. Basic Flow
 
@@ -34,7 +34,7 @@ He can authorize:
 * Bob's account for the `TrustSet` transaction permission.
 * Kylie's account for the `TrustlineAuthorize` granular permission.
 
-## 2. On-Ledger Object: `TransactionAuth`
+## 2. On-Ledger Object: `AccountPermission`
 
 This object represents a set of permissions that an account has delegated to another account, and is modeled to be similar to [`DepositPreauth` objects](https://xrpl.org/docs/references/protocol/ledger-data/ledger-entry-types/depositpreauth).
 
@@ -43,7 +43,7 @@ This object represents a set of permissions that an account has delegated to ano
 | Field Name | Required? | JSON Type | Internal Type | Description |
 |------------|-----------|-----------|---------------|-------------|
 |`LedgerIndex`| ✔️|`string`|`Hash256`|The unique ID of the ledger object.|
-|`LedgerEntryType`| ✔️|`string`|`UInt16`|The ledger object's type (`TransactionAuth`)|
+|`LedgerEntryType`| ✔️|`string`|`UInt16`|The ledger object's type (`AccountPermission`)|
 |`Account`| ✔️|`string`|`AccountID`|The account that wants to authorize another account.|
 |`Authorize`| ✔️|`string`|`AccountID`|The authorized account.|
 |`Permissions`| ✔️|`string`|`STArray`|The transaction permissions that the account has access to.|
@@ -52,13 +52,13 @@ This object represents a set of permissions that an account has delegated to ano
 
 #### 2.1.1. Object ID
 
-The ID of this object will be a hash of the `Account` and `Authorize` fields, combined with the unique space key for `TransactionAuth` objects, which will be defined during implementation.
+The ID of this object will be a hash of the `Account` and `Authorize` fields, combined with the unique space key for `AccountPermission` objects, which will be defined during implementation.
 
 #### 2.1.2. `Permissions`
 
 This field is an array of permissions to delegate to the account, as listed in [XLS-otherd, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316). The array will have a maximum length of 10.
 
-## 3. Transaction: `TransactionAuth`
+## 3. Transaction: `AccountPermissionSet`
 
 This object represents a set of permissions that an account has delegated to another account, and is modeled to be similar to the [`DepositPreauth` transaction type](https://xrpl.org/docs/references/protocol/transactions/types/depositpreauth).
 
@@ -66,9 +66,9 @@ This object represents a set of permissions that an account has delegated to ano
 
 | Field Name | Required? | JSON Type | Internal Type | Description |
 |------------|-----------|-----------|---------------|-------------|
-|`TransactionType`| ✔️|`string`|`UInt16`|The transaction type (`TransactionAuth`).|
+|`TransactionType`| ✔️|`string`|`UInt16`|The transaction type (`AccountPermissionSet`).|
 |`Account`| ✔️|`string`|`AccountID`|The account that wants to authorize another account.|
-|`Authorize`| |`string`|`AccountID`|The authorized account.|
+|`Authorize`|✔️|`string`|`AccountID`|The authorized account.|
 |`Permissions`| ✔️|`string`|`STArray`|The transaction permissions that the account has been granted.|
 
 ### 3.1.1. `Permissions`
@@ -77,13 +77,13 @@ This transaction works slightly differently from the `DepositPreauth` transactio
 
 ### 3.2. Failure Conditions
 
-* `Permissions` is too long.
+* `Permissions` is too long (the limit is 10), or includes duplicates.
 * Any of the specified permissions are invalid.
 * The account specified in `Authorize` doesn't exist.
 
 ### 3.3. State Changes
 
-A `TransactionAuth` object will be created, modified, or deleted based on the provided fields.
+A `AccountPermission` object will be created, modified, or deleted based on the provided fields.
 
 ## 4. Transactions: Common Fields
 
@@ -111,87 +111,142 @@ The transaction succeeds as if the transaction was sent by the `OnBehalfOf` acco
 
 ## 5. Examples
 
-In this example, Isaac is delegating the `Payment` permission to Alice, the `TrustSet` permission to Bob, and the `TrustlineAuthorize` permission to Kylie.
+### 5.1. `Payment` Permission
 
-### 5.1. `TransactionAuth` Transaction
+In this example, Isaac is delegating the `Payment` permission to Alice.
 
+#### 5.1.1. `AccountPermissionSet` Transaction
 ```typescript
 {
-    TransactionType: "TransactionAuth",
+    TransactionType: "AccountPermissionSet",
     Account: "rISAAC......",
     Authorize: "rALICE......",
     Permissions: [{Permission: {PermissionValue: "Payment"}}],
-}
-```
-```typescript
-{
-    TransactionType: "TransactionAuth",
-    Account: "rISAAC......",
-    Authorize: "rBOB......",
-    Permissions: [{Permission: {PermissionValue: "TrustSet"}}],
-}
-```
-```typescript
-{
-    TransactionType: "TransactionAuth",
-    Account: "rISAAC......",
-    Authorize: "rKYLIE......",
-    Permissions: [{Permission: {PermissionValue: "TrustlineAuthorize"}}],
 }
 ```
 
 _Note: the weird format of `Permissions`, with needing an internal object, is due to peculiarities in the [XRPL's Binary Format](https://xrpl.org/docs/references/protocol/binary-format). It can be cleaned up/simplified in tooling._
 
-### 5.2. `TransactionAuth` Object
-
+#### 5.1.2. `AccountPermission` Ledger Object
 ```typescript
 {
-    LedgerEntryType: "TransactionAuth",
+    LedgerEntryType: "AccountPermission",
     Account: "rISAAC......",
     Authorize: "rALICE......",
     Permissions: [{Permission: {PermissionValue: "Payment"}}],
 }
 ```
+
+#### 5.1.3. `Payment` Transaction
 ```typescript
 {
-    LedgerEntryType: "TransactionAuth",
+    Transaction: "Payment",
+    Account: "rALICE......",
+    Amount: "1000000000",
+    Destination: "rCHARLIE......",
+    OnBehalfOf: "rISAAC......"
+}
+```
+
+### 5.2. `TrustSet` Permission
+
+In this example, Isaac is delegating the `TrustSet` permission to Bob.
+
+#### 5.2.1. `AccountPermissionSet` Transaction
+```typescript
+{
+    TransactionType: "AccountPermissionSet",
     Account: "rISAAC......",
     Authorize: "rBOB......",
     Permissions: [{Permission: {PermissionValue: "TrustSet"}}],
 }
 ```
+
+#### 5.2.2. `AccountPermission` Ledger Object
 ```typescript
 {
-    LedgerEntryType: "TransactionAuth",
+    LedgerEntryType: "AccountPermission",
+    Account: "rISAAC......",
+    Authorize: "rBOB......",
+    Permissions: [{Permission: {PermissionValue: "TrustSet"}}],
+}
+```
+
+#### 5.2.3. `TrustSet` Transaction
+
+In this example, Bob is freezing a trustline from Holden, a USD.Isaac token holder.
+
+```typescript
+{
+    Transaction: "TrustSet",
+    Account: "rBOB......",
+    LimitAmount: {
+        currency: "USD",
+        issuer: "rHOLDEN......",
+        value: "0",
+    },
+    Flags: 0x00100000, // tfSetFreeze
+    OnBehalfOf: "rISAAC......"
+}
+```
+
+### 5.3. `TrustlineAuthorize` Permission
+
+In this example, Isaac is delegating the `TrustlineAuthorize` permission to Kylie.
+
+#### 5.3.1. `AccountPermissionSet` Transaction
+```typescript
+{
+    TransactionType: "AccountPermissionSet",
     Account: "rISAAC......",
     Authorize: "rKYLIE......",
     Permissions: [{Permission: {PermissionValue: "TrustlineAuthorize"}}],
 }
 ```
 
+#### 5.3.2. `AccountPermission` Object
+```typescript
+{
+    LedgerEntryType: "AccountPermission",
+    Account: "rISAAC......",
+    Authorize: "rKYLIE......",
+    Permissions: [{Permission: {PermissionValue: "TrustlineAuthorize"}}],
+}
+```
+
+#### 5.3.3. `TrustSet` Transaction
+
+In this example, Kylie is authorizing Holden's trustline.
+
+```typescript
+{
+    Transaction: "TrustSet",
+    Account: "rBOB......",
+    LimitAmount: {
+        currency: "USD",
+        issuer: "rHOLDEN......",
+        value: "0",
+    },
+    Flags: 0x00010000, // tfSetfAuth
+    OnBehalfOf: "rISAAC......"
+}
+```
+
+Note that this transaction will fail if:
+* The trustline with Holden doesn't exist.
+* Kylie tries to change any trustline setting that isn't just the `tfSetfAuth` flag.
+
 ## 6. Invariants
 
-* An account should never be able to send a transaction on behalf of another account without a valid `TransactionAuth` object.
+* An account should never be able to send a transaction on behalf of another account without a valid `AccountPermission` object.
 
 ## 7. Security
 
-Delegating permissions to other accounts requires a high degree of trust, especially when the delegated account can potentially access funds (`Payment`s) or charge reserves (any transaction that can create objects). In addition, any account that has access to the entire `AccountSet`, `SignerListSet`, or `TransactionAuth` transactions can give themselves any permissions even if this was not originally part of the intention. Authorizing users for those transactions should have heavy warnings associated with it in tooling and UIs.
+Delegating permissions to other accounts requires a high degree of trust, especially when the delegated account can potentially access funds (`Payment`s) or charge reserves (any transaction that can create objects). In addition, any account that has access to the entire `AccountSet`, `SignerListSet`, or `AccountPermissionSet` transactions can give themselves any permissions even if this was not originally part of the intention. Authorizing users for those transactions should have heavy warnings associated with it in tooling and UIs.
 
-All tooling indicating whether an account has been blackholed will need to be updated to also check if `AccountSet`, `SignerListSet`, or `TransactionAuth` permissions have been delegated.
+All tooling indicating whether an account has been blackholed will need to be updated to also check if `AccountSet`, `SignerListSet`, or `AccountPermissionSet` permissions have been delegated.
 
 On the other hand, this mechanism also offers a granular approach to authorization, allowing accounts to selectively grant specific permissions without compromising overall account control. This approach provides a balance between security and usability, empowering account holders to manage their assets and interactions more effectively.
-
-## n+1. Open Questions
-
-* Could this be abused by scammers and other malicious people, who could convince unsuspecting users to give other accounts permissions to drain the account?
-	* This may need to have heavy warnings associated with it, especially on the `Payment` transaction
-	* I guess signer lists (and especially multiple signer lists) have the same possible problem?
-		* Maybe the original account still pays fees?
-	* Maybe it should be limited to _just_ the granular permissions? Or just `TrustSet` things?
-* Should the `NFTokenMinter` field be deprecated as a result?
-	* Different reserve needs - no reserve needed for the `NFTokenMinter` field
-		* However, this way would allow the minters to mint directly into your account
-* Should the `TransactionAuth` and `DepositPreauth` transaction types operate exactly the same or is it okay for there to be a bit of a difference?
 
 # Appendix
 
@@ -211,8 +266,18 @@ In this proposal:
 
 Both are useful for slightly different usecases; XLS-49d is more useful when you want multiple signatures to guard certain features, while this proposal is useful when you want certain parties to have access to certain features. This proposal does support XLS-49d-like usage, but it would cost more XRP, as a second account would need to be created.
 
-<!--
 ## Appendix B: FAQ
 
-### B.1: 
+### B.1: How does using an `NFTokenMint` permission compare to using the existing `NFTokenMinter` account field?
 
+*Note that the `NFTokenMinter` field provides more permissions than just `NFTokenMint`ing; it provides permissions over offers and burning as well (though of course multiple permissions can be delegated to one account).* 
+
+The biggest advantage to using the `NFTokenMint` field is that it's "free" (it doesn't cost any additional reserve). Delegating a permission to an account costs one object reserve (for the `AccountPermission` object).
+
+On the other hand, with this proposal, you can have as many accounts with the `NFTokenMint` permission as you want. The minting account can also mint NFTs directly into your account, instead of into their own account.
+
+Given the overlap in functionality, the `NFTokenMinter` field could potentially be deprecated in the future.
+
+### B.2. Why is the process of unauthorizing an account different between the `DepositPreauth` transaction and the `AccountPermissionSet` transaction?
+
+The `DepositPreauth` transaction has an `Unauthorize` field. It seemed more confusing to use such a paradigm here, but it can be changed if there are strong objections.

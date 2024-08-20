@@ -98,7 +98,11 @@ Some other potential examples include:
 * `SponsorFee` - the ability to sponsor the fee of another account (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 * `SponsorReserve` - the ability to sponsor the fee of another account/object (from [XLS-68d](https://github.com/XRPLF/XRPL-Standards/discussions/196))
 
-**NOTE:** The set of permissions must be hard-coded. No custom configurations are allowed. For example, we cannot add permissions based on specific currencies - the best you could theoretically do on that front is XRP vs. issued currency.
+#### 2.4.1. Limitations
+
+The set of permissions must be hard-coded. No custom configurations are allowed. For example, we cannot add permissions based on specific currencies - the best you could theoretically do on that front is XRP vs. issued currency. 
+
+In addition, each permission needs to be implemented on its own in the source code, so adding a new permission requires an amendment.
 
 ## 3. Security
 

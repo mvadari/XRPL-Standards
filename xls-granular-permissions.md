@@ -55,7 +55,7 @@ A permission is represented by a `UInt32`.
 
 ### 2.1. Global Permission
 
-The global permission value is already used in existing signer lists; they have a `SignerListID` value of `0`.
+The global permission value is already used in existing signer lists; they have a `SignerListID` value of `0`. This is being retroactively redefined to mean that the signer list has global permissions (i.e. can submit any transaction on behalf of an account). 
 
 **`0`: all permissions**
 

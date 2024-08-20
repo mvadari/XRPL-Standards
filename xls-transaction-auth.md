@@ -238,7 +238,7 @@ Note that this transaction will fail if:
 
 ## 6. Invariants
 
-* An account should never be able to send a transaction on behalf of another account without a valid `AccountPermission` object.
+An account should never be able to send a transaction on behalf of another account without a valid `AccountPermission` object.
 
 ## 7. Security
 

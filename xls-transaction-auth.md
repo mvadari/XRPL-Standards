@@ -23,7 +23,7 @@ We propose:
 
 We also propose modifying the transaction common fields.
 
-This feature will require an amendment, tentatively titled `featureAccountPermission`.
+This feature will require an amendment, tentatively titled `AccountPermission`.
 
 ### 1.1. Basic Flow
 

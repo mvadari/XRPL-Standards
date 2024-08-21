@@ -56,7 +56,11 @@ The ID of this object will be a hash of the `Account` and `Authorize` fields, co
 
 #### 2.1.2. `Permissions`
 
-This field is an array of permissions to delegate to the account, as listed in [XLS-otherd, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316). The array will have a maximum length of 10.
+This field is an array of permissions to delegate to the account, as listed in [XLS-74d, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316). The array will have a maximum length of 10.
+
+### 2.2. Account Deletion
+
+The `AccountPermission` object is not a [deletion blocker](https://xrpl.org/docs/concepts/accounts/deleting-accounts/#requirements).
 
 ## 3. Transaction: `AccountPermissionSet`
 
@@ -242,9 +246,9 @@ An account should never be able to send a transaction on behalf of another accou
 
 ## 7. Security
 
-Delegating permissions to other accounts requires a high degree of trust, especially when the delegated account can potentially access funds (`Payment`s) or charge reserves (any transaction that can create objects). In addition, any account that has access to the entire `AccountSet`, `SignerListSet`, or `AccountPermissionSet` transactions can give themselves any permissions even if this was not originally part of the intention. Authorizing users for those transactions should have heavy warnings associated with it in tooling and UIs.
+Delegating permissions to other accounts requires a high degree of trust, especially when the delegated account can potentially access funds (`Payment`s) or charge reserves (any transaction that can create objects). In addition, any account that has access to the entire `AccountSet`, `SetRegularKey`, `SignerListSet`, or `AccountPermissionSet` transactions can give themselves any permissions even if this was not originally part of the intention. Authorizing users for those transactions should have heavy warnings associated with it in tooling and UIs.
 
-All tooling indicating whether an account has been blackholed will need to be updated to also check if `AccountSet`, `SignerListSet`, or `AccountPermissionSet` permissions have been delegated.
+All tooling indicating whether an account has been blackholed will need to be updated to also check if `AccountSet`, `SetRegularKey`, `SignerListSet`, or `AccountPermissionSet` permissions have been delegated.
 
 On the other hand, this mechanism also offers a granular approach to authorization, allowing accounts to selectively grant specific permissions without compromising overall account control. This approach provides a balance between security and usability, empowering account holders to manage their assets and interactions more effectively.
 
@@ -278,6 +282,10 @@ On the other hand, with this proposal, you can have as many accounts with the `N
 
 Given the overlap in functionality, the `NFTokenMinter` field could potentially be deprecated in the future.
 
-### B.2. Why is the process of unauthorizing an account different between the `DepositPreauth` transaction and the `AccountPermissionSet` transaction?
+### B.2: Can a blackholed account have some permissions set?
+
+Yes, in certain cases. For example, an account could still be considered "blackholed" if it has the `AccountDomainSet` permission delegated, but not if it has the `SetRegularKey` permission delegated.
+
+### B.3: Why is the process of unauthorizing an account different between the `DepositPreauth` transaction and the `AccountPermissionSet` transaction?
 
 The `DepositPreauth` transaction has an `Unauthorize` field. It seemed more confusing to use such a paradigm here, but it can be changed if there are strong objections.

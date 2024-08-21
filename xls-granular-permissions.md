@@ -17,9 +17,9 @@ This document formalizes different types of transaction-based account permission
 
 [XLS-49d](https://github.com/XRPLF/XRPL-Standards/discussions/144) proposed transaction-type-level permissions. These types of permissions can be used for multiple signer lists, as explained in XLS-49d, but could also be used in conjunction with other features.
 
-Currently it's all or nothing - global signer lists and regular keys can do all transactions. Sometimes you want to provide an account permissions to a subset of features, like with `NFTokenMinter` - maybe a few transaction types (e.g. all AMM transaction), or a single transaction type (e.g. `NFTokenMint`), or even some portion of a transaction type (e.g. authorizing trustlines).
+Currently, it's all or nothing - global signer lists and regular keys can do all transactions. Sometimes you want to provide an account permissions to a subset of features, like with `NFTokenMinter` - maybe a few transaction types (e.g. all AMM transaction), or a single transaction type (e.g. `NFTokenMint`), or even some portion of a transaction type (e.g. authorizing trustlines).
 
-This standard formalizes those transaction-type permissions, and also adds more granular permission levels. 
+This standard formalizes those transaction-type permissions, and also adds more granular permission options. 
 
 ### 1.1. Background: Integer Types
 
@@ -33,7 +33,7 @@ An integer type name includes information about what type of integer it is (sign
 
 The integer types that the XRPL supports are as follows:
 
-| Name | Range  | Example Field |
+| Name | Range | Example Field |
 |------|--------|---------------|
 |`UInt8`|0-255|`sfTransactionResult`|
 |`UInt16`|0-65,535|`sfTransactionType`|
@@ -106,7 +106,7 @@ In addition, each permission needs to be implemented on its own in the source co
 
 ## 3. Security
 
-Giving permissions to other parties requires a high degree of trust, especially when the delegated account can potentially access funds (the `Payment` permission) or charge reserves (any transaction that can create objects). In addition, any account that has permissions for the entire `AccountSet` or `SignerListSet` transactions can give themselves any permissions even if this was not originally part of the intention.
+Giving permissions to other parties requires a high degree of trust, especially when the delegated account can potentially access funds (the `Payment` permission) or charge reserves (any transaction that can create objects). In addition, any account that has permissions for the entire `AccountSet`, `SetRegularKey`, or `SignerListSet` transactions can give themselves any permissions even if this was not originally part of the intention.
 
 With granular permissions, however, users can give permissions to other accounts for only parts of transactions without giving them full control. This is especially helpful for managing complex transaction types like `AccountSet`.
 
@@ -114,7 +114,6 @@ With granular permissions, however, users can give permissions to other accounts
 
 ## Appendix A: FAQ
 
-### A.1: Could we add additional permissions for different groups of transactions, like all NFT transactions or all AMM transactions?
+### A.1: Could we add additional permission values for different groups of transactions, like all NFT transactions or all AMM transactions?
 
 Theoretically, yes. However, that can also easily be handled with a group of transaction-level permissions. If you think there is a need for this that isn't already addressed by having a group of permissions, please explain in a comment below.
-

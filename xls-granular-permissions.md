@@ -69,6 +69,10 @@ Transaction type permissions were previously defined in [XLS-49d](https://github
 
 Adding a new transaction type to the XRPL will automatically be supported by any feature that uses these permissions.
 
+#### 2.2.1. `Batch` Transactions
+
+The one exception to this rule is `Batch` transactions ([XLS-56d](https://github.com/XRPLF/XRPL-Standards/discussions/162)). They will not have a separate permission, since `Batch` transactions on their own do not do anything. In order to execute a `Batch` transaction with a permission, the user will need to have permissions for all the inner transactions.
+
 ### 2.3. Granular Permissions
 
 These permissions would support control over some smaller portion of a transaction, rather than being able to do all of the functionality that the transaction allows.

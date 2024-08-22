@@ -25,7 +25,12 @@ We also propose modifying the transaction common fields.
 
 This feature will require an amendment, tentatively titled `AccountPermission`.
 
-### 1.1. Basic Flow
+### 1.1. Terminology
+
+* **Delegating account**: The main account, which is delegating permissions to another account.
+* **Delegated account**: The account that is having permissions delegated to it.
+
+### 1.2. Basic Flow
 
 Isaac, a token issuer, wants to set up his account to follow security best practices and separation of responsibilities. He wants Alice to manage token issuing and Bob to manage trustlines. He is also working with Kylie, a KYC provider, who he wants to be able to authorize trustlines but not have any other permissions (as she is an external party).
 
@@ -33,6 +38,8 @@ He can authorize:
 * Alice's account for the `Payment` transaction permission.
 * Bob's account for the `TrustSet` transaction permission.
 * Kylie's account for the `TrustlineAuthorize` granular permission.
+
+The full set of available permissions is listed in [XLS-74d, Account Permissions](https://github.com/XRPLF/XRPL-Standards/discussions/217)
 
 ## 2. On-Ledger Object: `AccountPermission`
 
@@ -56,7 +63,7 @@ The ID of this object will be a hash of the `Account` and `Authorize` fields, co
 
 #### 2.1.2. `Permissions`
 
-This field is an array of permissions to delegate to the account, as listed in [XLS-74d, Account Transaction Permissions](https://gist.github.com/mvadari/a8d76f0c4e3aa54eb765f08bcacc5316). The array will have a maximum length of 10.
+This field is an array of permissions to delegate to the account, as listed in [XLS-74d, Account Permissions](https://github.com/XRPLF/XRPL-Standards/discussions/217). The array will have a maximum length of 10.
 
 ### 2.2. Account Deletion
 
@@ -258,21 +265,27 @@ On the other hand, this mechanism also offers a granular approach to authorizati
 
 In XLS-49d:
 * There is multisign support by default.
-* The signer list is controlled by the main account.
+* The signer list is controlled by the delegating account.
 * There may be at most one list per permission, with a maximum of 32 signers.
 * There is a total of one reserve per signer list.
+* The delegating account pays the fees.
 
 In this proposal:
 * There is no direct multisign support (though permissions can be delegated to an account with a multisign setup).
-* The keys that have been delegated to are self-governed (i.e. the main account doesn't control the signer list on an account that has been delegated to).
+* The keys that have been delegated to are self-governed (i.e. the delegating account doesn't control the signer list on an account that has been delegated to).
 * A permission may be delegated to as many accounts/signer lists as one is willing to pay reserve for.
 * There is one reserve per delegated account.
+* The delegated account pays the fees.
 
 Both are useful for slightly different usecases; XLS-49d is more useful when you want multiple signatures to guard certain features, while this proposal is useful when you want certain parties to have access to certain features. This proposal does support XLS-49d-like usage, but it would cost more XRP, as a second account would need to be created.
 
 ## Appendix B: FAQ
 
-### B.1: How does using an `NFTokenMint` permission compare to using the existing `NFTokenMinter` account field?
+### B.1: Who pays the transaction fees?
+
+The account that sends the transaction pays the transaction fees (not the delegating account, but the delegated account).
+
+### B.2: How does using an `NFTokenMint` permission compare to using the existing `NFTokenMinter` account field?
 
 *Note that the `NFTokenMinter` field provides more permissions than just `NFTokenMint`ing; it provides permissions over offers and burning as well (though of course multiple permissions can be delegated to one account).* 
 
@@ -282,10 +295,14 @@ On the other hand, with this proposal, you can have as many accounts with the `N
 
 Given the overlap in functionality, the `NFTokenMinter` field could potentially be deprecated in the future.
 
-### B.2: Can a blackholed account have some permissions set?
+### B.3: Can a blackholed account have some permissions set?
 
-Yes, in certain cases. For example, an account could still be considered "blackholed" if it has the `AccountDomainSet` permission delegated, but not if it has the `SetRegularKey` permission delegated.
+Yes, in certain cases. For example, an account could still be considered "blackholed" if it has the `AccountDomainSet` permission delegated, but not if it has the `SetRegularKey` permission delegated. The definition of a blackholed account will need to be modified after this amendment.
 
-### B.3: Why is the process of unauthorizing an account different between the `DepositPreauth` transaction and the `AccountPermissionSet` transaction?
+### B.4: Can I delegate permissions to a `Batch` transaction ([XLS-56d](https://github.com/XRPLF/XRPL-Standards/discussions/162))?
+
+No, `OnBehalfOf` will not be allowed on `Batch` transactions. Instead, the inner transactions must include the `OnBehalfOf` field.
+
+### B.5: Why is the process of unauthorizing an account different between the `DepositPreauth` transaction and the `AccountPermissionSet` transaction?
 
 The `DepositPreauth` transaction has an `Unauthorize` field. It seemed more confusing to use such a paradigm here, but it can be changed if there are strong objections.

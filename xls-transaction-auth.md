@@ -49,7 +49,7 @@ This object represents a set of permissions that an account has delegated to ano
 
 | Field Name | Required? | JSON Type | Internal Type | Description |
 |------------|-----------|-----------|---------------|-------------|
-|`LedgerIndex`| ✔️|`string`|`Hash256`|The unique ID of the ledger object.|
+|`LedgerIndex`| :white-check-mark:|`string`|`Hash256`|The unique ID of the ledger object.|
 |`LedgerEntryType`| ✔️|`string`|`UInt16`|The ledger object's type (`AccountPermission`)|
 |`Account`| ✔️|`string`|`AccountID`|The account that wants to authorize another account.|
 |`Authorize`| ✔️|`string`|`AccountID`|The authorized account.|

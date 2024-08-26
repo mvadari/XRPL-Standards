@@ -29,6 +29,13 @@ Lower-level languages, such as C++ (the language that `rippled` is written in), 
 
 The XRPL supports many types of integers, all of which are unsigned. The difference between the different types is the size: the number of bits used to represent the number. A bit is a value that can be either `0` or `1`, the lowest level of data that a computer supports; all other data types are implemented as bits at their lowest level. One bit can only have two values (`0` and `1`), but two bits can have four values (`00` or `0`, `01` or `1`, `10` or `2`, `11` or `3`). So $n$ bits can represent $2^n$ possible values ($0$ to $2^n-1$).
 
+| Number of Bits | Number of Possible Values | Possible Values (in [Binary](https://www.lifewire.com/how-to-read-binary-4692830) and Decimal) |
+|-------------|---------------|--------|
+|1|$2^1$ or 2|`0` <br> `1`|
+|2|$2^2$ or 4|`00` or `0` <br> `01` or `1` <br> `10` or `2` <br> `11` or `3`|
+|3|$2^3$ or 8|`000` or `0` <br> `001` or `1` <br> `010` or `2` <br> `011` or `3` <br> `100` or `4` <br> `101` or `5` <br> `110` or `6` <br> `111` or `7`|
+And so on.
+
 An integer type name includes information about what type of integer it is (signed vs. unsigned) and how many bits it uses. So a `UInt8` is an unsigned integer that uses 8 bits (the `U` stands for "unsigned"), and an `Int16` is a signed integer that uses 16 bits (if the `U` is omitted, it's a signed integer).
 
 The integer types that the XRPL supports are as follows:
@@ -37,15 +44,15 @@ The integer types that the XRPL supports are as follows:
 |------|--------|---------------|
 |`UInt8`|0-255|`sfTransactionResult`|
 |`UInt16`|0-65,535|`sfTransactionType`|
-|`UInt32`|0-4,294,967,296|`sfSequence`|
-|`UInt64`|$0-2^{64}$|`sfExchangeRate`|
-|`UInt96`|$0-2^{96}$|None right now|
-|`UInt128`|$0-2^{128}$|`sfEmailHash`|
-|`UInt160`|$0-2^{160}$|`sfTakerPaysCurrency`|
-|`UInt192`|$0-2^{192}$|`sfMPTokenIssuanceID`|
-|`UInt256`|$0-2^{256}$|`sfNFTokenID`|
-|`UInt384`|$0-2^{384}$|None right now|
-|`UInt512`|$0-2^{512}$|None right now|
+|`UInt32`|0-4,294,967,295|`sfSequence`|
+|`UInt64`|$0-2^{64}-1$|`sfExchangeRate`|
+|`UInt96`|$0-2^{96}-1$|None right now|
+|`UInt128`|$0-2^{128}-1$|`sfEmailHash`|
+|`UInt160`|$0-2^{160}-1$|`sfTakerPaysCurrency`|
+|`UInt192`|$0-2^{192}-1$|`sfMPTokenIssuanceID`|
+|`UInt256`|$0-2^{256}-1$|`sfNFTokenID`|
+|`UInt384`|$0-2^{384}-1$|None right now|
+|`UInt512`|$0-2^{512}-1$|None right now|
 
 _The `sf` in the above table stands for "Serialized Field"._
 

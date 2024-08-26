@@ -34,6 +34,7 @@ The XRPL supports many types of integers, all of which are unsigned. The differe
 |1|$2^1$ or 2|`0` <br> `1`|
 |2|$2^2$ or 4|`00` or `0` <br> `01` or `1` <br> `10` or `2` <br> `11` or `3`|
 |3|$2^3$ or 8|`000` or `0` <br> `001` or `1` <br> `010` or `2` <br> `011` or `3` <br> `100` or `4` <br> `101` or `5` <br> `110` or `6` <br> `111` or `7`|
+
 And so on.
 
 An integer type name includes information about what type of integer it is (signed vs. unsigned) and how many bits it uses. So a `UInt8` is an unsigned integer that uses 8 bits (the `U` stands for "unsigned"), and an `Int16` is a signed integer that uses 16 bits (if the `U` is omitted, it's a signed integer).

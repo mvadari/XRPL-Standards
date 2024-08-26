@@ -45,14 +45,14 @@ The integer types that the XRPL supports are as follows:
 |`UInt8`|0-255|`sfTransactionResult`|
 |`UInt16`|0-65,535|`sfTransactionType`|
 |`UInt32`|0-4,294,967,295|`sfSequence`|
-|`UInt64`|$0-2^{64}-1$|`sfExchangeRate`|
-|`UInt96`|$0-2^{96}-1$|None right now|
-|`UInt128`|$0-2^{128}-1$|`sfEmailHash`|
-|`UInt160`|$0-2^{160}-1$|`sfTakerPaysCurrency`|
-|`UInt192`|$0-2^{192}-1$|`sfMPTokenIssuanceID`|
-|`UInt256`|$0-2^{256}-1$|`sfNFTokenID`|
-|`UInt384`|$0-2^{384}-1$|None right now|
-|`UInt512`|$0-2^{512}-1$|None right now|
+|`UInt64`|$0-2^{64}{\text -}1$|`sfExchangeRate`|
+|`UInt96`|$0-2^{96}{\text -}1$|None right now|
+|`UInt128`|$0-2^{128}{\text -}1$|`sfEmailHash`|
+|`UInt160`|$0-2^{160}{\text -}1$|`sfTakerPaysCurrency`|
+|`UInt192`|$0-2^{192}{\text -}1$|`sfMPTokenIssuanceID`|
+|`UInt256`|$0-2^{256}{\text -}1$|`sfNFTokenID`|
+|`UInt384`|$0-2^{384}{\text -}1$|None right now|
+|`UInt512`|$0-2^{512}{\text -}1$|None right now|
 
 _The `sf` in the above table stands for "Serialized Field"._
 

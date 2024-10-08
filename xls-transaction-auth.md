@@ -49,11 +49,12 @@ This object represents a set of permissions that an account has delegated to ano
 
 | Field Name | Required? | JSON Type | Internal Type | Description |
 |------------|-----------|-----------|---------------|-------------|
-|`LedgerIndex`| :white-check-mark:|`string`|`Hash256`|The unique ID of the ledger object.|
+|`LedgerIndex`| ✔️|`string`|`Hash256`|The unique ID of the ledger object.|
 |`LedgerEntryType`| ✔️|`string`|`UInt16`|The ledger object's type (`AccountPermission`)|
 |`Account`| ✔️|`string`|`AccountID`|The account that wants to authorize another account.|
 |`Authorize`| ✔️|`string`|`AccountID`|The authorized account.|
 |`Permissions`| ✔️|`string`|`STArray`|The transaction permissions that the account has access to.|
+|`OwnerNode`|✔️|`string`|`UInt64`|A hint indicating which page of the sender's owner directory links to this object, in case the directory consists of multiple pages.|
 |`PreviousTxnID`|✔️|`string`|`Hash256`|The identifying hash of the transaction that most recently modified this object.|
 |`PreviousTxnLgrSeqNumber`|✔️|`number`|`UInt32`|The index of the ledger that contains the transaction that most recently modified this object.|
 

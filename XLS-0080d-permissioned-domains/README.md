@@ -43,7 +43,7 @@ This object represents a permissioned domain.
 |`Flags`| ✔️|`number`|`UInt32`|Flag values associated with this object.|
 |`LedgerEntryType`|✔️|`string`|`UInt16`|The ledger object's type (`PermissionedDomain`).|
 |`Owner`|✔️|`string`|`AccountID`|The account that controls the settings of the domain.|
-|`OwnerNode`|✔️|`string`|`UInt64`|A hint indicating which page of the sender's owner directory links to this object, in case the directory consists of multiple pages.|
+|`OwnerNode`|✔️|`string`|`UInt64`|A hint indicating which page of the owner's owner directory links to this object, in case the directory consists of multiple pages.|
 |`Sequence`|✔️|`number`|`UInt32`|The `Sequence` value of the `PermissionedDomainSet` transaction that created this domain. Used in combination with the `Account` to identify this domain.|
 |`AcceptedCredentials`|✔️|`array`|`STArray`|The credentials that are accepted by the domain. Ownership of one of these credentials automatically makes you a member of the domain.|
 |`PreviousTxnID`|✔️|`string`|`Hash256`|The identifying hash of the transaction that most recently modified this entry.|
@@ -81,7 +81,7 @@ This transaction creates or modifies a `PermissionedDomain` object.
 |`TransactionType`|✔️|`string`|`UInt16`|The transaction type (`PermissionedDomainSet`).|
 |`Account`|✔️|`string`|`AccountID`|The account sending the transaction.|
 |`DomainID`| |`string`|`Hash256`|The domain to modify. Must be included if modifying an existing domain.|
-|`AcceptedCredentials`|✔️|`array`|`STArray`|The credentials that are accepted by the domain. Ownership of one of these credentials automatically makes you a member of the domain. An empty array means deleting the field.|
+|`AcceptedCredentials`|✔️|`array`|`STArray`|The credentials that are accepted by the domain. Ownership of one of these credentials automatically makes you a member of the domain.|
 
 ### 3.2. Failure Conditions
 

@@ -4,7 +4,7 @@
   description: Allow an account to fund fees and reserves on behalf of another account
   author: Mayukha Vadari (@mvadari)
   created: 2024-05-02
-  updated: 2025-09-19
+  updated: 2025-09-24
   status: Draft
   category: Amendment
   requires: 74

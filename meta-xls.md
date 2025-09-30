@@ -7,7 +7,14 @@
     status: Proposal
     category: Meta
     created: 2025-09-22
+    version: 0.2.0
 </pre>
+
+# Changelog
+
+
+* (2025-09-09) 0.2.0: Introduced a process for superseeding and updating specification versions.
+* (2025-08-29) 0.1.0: Introduced the initial version of the XLS Process and Guidelines
 
 # 1. Abstract
 
@@ -69,9 +76,9 @@ Every XLS must have a status included in its heading:
 
 - **Idea**: An idea that is pre-draft. This is currently reflected by the “Pre-Proposal Idea” category in the existing XLS discussions.
 - **Proposal**: A fairly fleshed-out proposal for an XLS. This is currently reflected by the "Standard Proposal" category in the existing XLS discussions.
-- **Draft**: The first formally tracked stage of an XLS in development. An XLS is merged by an XLS Editor into the XLS repository when properly formatted. XLS numbers will be assigned at this stage.
-- **Final**: This XLS represents the final standard. A `Final` XLS exists in a state of finality and should only be updated to correct errata and add non-normative clarifications. For rippled-related XLSes, the XLS can only be considered `Final` once the rippled PR has been merged. For other XLSes, there needs to be at least one project that has implemented full support of the Standard.
-- **Living**: A special status for XLSes that are designed to be continually updated and not reach a state of finality. This includes, for example, this XLS.
+- **Draft**: The first formally tracked stage of an XLS in development. An XLS is merged by an XLS Editor into the XLS repository when properly formatted, and assigned a version of `0.1.0`. XLS numbers will be assigned at this stage. Authors can update `Draft` XLSes at any time.
+- **Final**: This XLS represents the final standard. A `Final` XLS exists in a state of finality and should only be updated to correct errata and add non-normative clarifications. For rippled-related XLSes, the XLS can only be considered `Final` once the rippled PR has been merged. For other XLSes, there needs to be at least one project that has implemented full support of the Standard. Editorial changes (incrementing the `PATCH` version) can be merged directly by an editor. Adjustments to the logic, new fields or transactions (incrementing the `MINOR` version) require the XLS to be moved back to `Draft` status for review. Other significant changes (`MAJOR` version) must be proposed as a new, superseding XLS.
+- **Living**: A special status for XLSes that are designed to be continually updated and not reach a state of finality. This includes, for example, this XLS. `Living` documents can be updated with `minor` or `patch` changes at any time without changing their status.
 - **Deprecated**: This is an XLS in any category that was deprecated, as it is no longer supported. Due to the nature of XRP Ledger such features, especially amendment ones, may or may not be permanently removed from the codebase. Only a `Final` feature may be `Deprecated` .
 - **Stagnant**: Any XLS in `Draft` if inactive for a period of 6 months or greater is moved to `Stagnant`. An XLS may be resurrected from this state by Authors or XLS Editors through moving it back to Draft.
 - **Withdrawn**: The XLS Author(s) have withdrawn the proposed XLS. This state has finality and can no longer be resurrected using this XLS number. If the idea is pursued at a later date it is considered a new proposal.
@@ -94,6 +101,7 @@ The main formatting requirement for a `Proposal` is that its title must include 
 Any XLS that wants to be considered for `Draft` status should have the following parts:
 
 - **Preamble**: RFC 822 style headers containing metadata about the XLS, including the XLS number, a short descriptive title (limited to a maximum of 44 characters), a description (limited to a maximum of 140 characters), and the author details. Irrespective of the category, the title and description should not include XLS number. See below for details.
+- **Changelog**: A dated list of all version changes and a summary of what was changed. This section is mandatory for all XLSes with a version.
 - **Abstract**: Abstract is a multi-sentence (short paragraph) technical summary. This should be a very terse and human-readable version of the specification section. Someone should be able to read only the abstract to get the gist of what this specification does.
 - **Motivation** (optional): A motivation section is critical for XLSes that want to change the protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the XLS solves. This section may be omitted if the motivation is evident.
 - **Specification**: The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations. See below for details.
@@ -114,6 +122,9 @@ Each XLS must begin with an [RFC 822](https://www.ietf.org/rfc/rfc822.txt) style
 
 - `xls`: XLS number (assigned by the Editors - this field must not be included in `Idea`s or `Proposal`s). This field should _only_ contain the number and nothing else.
 - `title`: The XLS title is a few words, not a complete sentence. This field should _only_ contain the title, not an `XLS` prefix or the XLS number.
+- `version`: The version of this XLS, e.g. `1.0.0`.
+- `requires`: XLS number(s) this spec depends on, N/A if none.
+- `supersedes`: XLS number(s) this spec supersedes N/A if none.
 - `description`: Description is one full (short) sentence
 - `implementation`: A link to the `rippled` (or other repo) PR associated with the spec, if applicable. This must be included for `Amendment` and `System` proposals for them to be considered `Final`.
 - `author`: The list of the author’s or authors’ name(s) and/or username(s), or name(s) and email(s).

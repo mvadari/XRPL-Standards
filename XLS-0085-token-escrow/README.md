@@ -3,7 +3,7 @@
   title: Token-Enabled Escrows
   description: Enhancement to existing Escrow functionality to support both Trustline-based tokens (IOUs) and Multi-Purpose Tokens (MPTs)
   author: Denis Angell (@dangell7)
-  discussion-from: https://github.com/XRPLF/XRPL-Standards/discussions/248
+  proposal-from: https://github.com/XRPLF/XRPL-Standards/discussions/248
   status: Final
   category: Amendment
   requires: [XLS-33](../XLS-0033-multi-purpose-tokens/README.md)
@@ -80,7 +80,6 @@ The `EscrowCreate` transaction is modified as follows:
   - **MPTs**: The escrow `Amount` is deducted from the source's MPT balance. The `sfOutstandingBalance` of the MPT issuance remains unchanged. The `sfLockedAmount` is increased on both the source's MPT and the MPT issuance.
 - **Escrow Object Creation:**
   - The `Escrow` ledger object includes:
-    - `CancelAfter`: When the Escrow Expires (Required on IOU/MPT)
     - `Amount`: Tokens held in escrow.
     - `TransferRate`: `TransferRate` (IOUs) or `TransferFee` (MPTs) at creation.
     - `IssuerNode`: Reference to the issuer’s ledger node if applicable.
